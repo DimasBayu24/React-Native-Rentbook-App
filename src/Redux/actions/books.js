@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const URL_STRING = '/api/v1/';
+const URL_STRING = 'http://192.168.100.168:3009/api/v1';
 
 export const getAllBook = pageNumber => {
   return {

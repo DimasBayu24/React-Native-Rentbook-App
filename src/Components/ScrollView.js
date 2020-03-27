@@ -1,17 +1,26 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {connect} from 'react-redux';
+import {getAllGenre} from '../Redux/actions/genre';
+
+const mapStateToProps = genre => {
+  return {
+    genre,
+  };
+};
 
 class ScrollViewGenre extends Component {
   state = {
-    names: [
-      {name: 'Ben', id: 1},
-      {name: 'Susan', id: 2},
-      {name: 'Robert', id: 3},
-      {name: 'Mary', id: 4},
-      {name: 'Daniel', id: 5},
-      {name: 'Laura', id: 6},
-      {name: 'John', id: 7},
-    ],
+    genre: [],
+  };
+  getGenre = async () => {
+    await this.props.dispatch(getAllGenre());
+    this.setState({
+      genre: this.props.genre.genre.genreData,
+    });
+  };
+  componentDidMount = () => {
+    this.getGenre();
   };
   render() {
     return (
@@ -21,9 +30,11 @@ class ScrollViewGenre extends Component {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           automaticallyAdjustContentInsets={true}>
-          {this.state.names.map((item, index) => (
-            <View key={item.id} style={style.item}>
-              <Text>{item.name}</Text>
+          {this.state.genre.map((item, index) => (
+            <View key={item.id_genre} style={style.item}>
+              <Text style={{fontSize: 40, marginTop: 10, marginLeft: 20}}>
+                {item.genre_name}
+              </Text>
             </View>
           ))}
         </ScrollView>
@@ -31,11 +42,11 @@ class ScrollViewGenre extends Component {
     );
   }
 }
-export default ScrollViewGenre;
+export default connect(mapStateToProps)(ScrollViewGenre);
 
 const style = StyleSheet.create({
   container: {
-    height: 175,
+    height: 150,
   },
   item: {
     width: 300,

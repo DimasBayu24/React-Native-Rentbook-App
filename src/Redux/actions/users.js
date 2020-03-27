@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import Axios from 'axios';
 
-const URL_STRING = '/api/v1/user/';
+const URL_STRING = 'http://192.168.100.168:3009/api/v1/user/';
 
 export const register = data => {
   return {
@@ -10,20 +10,21 @@ export const register = data => {
   };
 };
 
-export const login = (data, history) => {
+export const login = (data, props) => {
   return {
     type: 'LOGIN',
     payload: Axios.post(`${URL_STRING}login`, data)
       .then(res => {
         if (res.status === 200) {
           // eslint-disable-next-line no-alert
-          alert('Sukses Register');
+          alert('Sukses!');
           try {
-            localStorage.setItem(
-              'token',
-              JSON.stringify(res.data.result.token),
-            );
-            history.push('/mainpage');
+            // localStorage.setItem(
+            //   'token',
+            //   JSON.stringify(res.data.result.token),
+
+            // );
+            props.navigate('MainPage');
           } catch (err) {
             console.log("Something's wrong");
           }

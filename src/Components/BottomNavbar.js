@@ -2,6 +2,7 @@ import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MainPage from '../Screens/MainPage';
 import History from '../Screens/History';
+import Icon from 'react-native-vector-icons/FontAwesome';
 const Tab = createMaterialBottomTabNavigator();
 
 const BottomNavbar = () => {
@@ -16,8 +17,22 @@ const BottomNavbar = () => {
         shadowRadius: 13.97,
         elevation: 21,
       }}>
-      <Tab.Screen name="MainPage" component={MainPage} />
-      <Tab.Screen name="History" component={History} />
+      <Tab.Screen
+        options={{
+          tabBarLabel: null,
+          tabBarIcon: ({tintColor}) => <Icon name="home" size={28} />,
+        }}
+        name="MainPage"
+        component={MainPage}
+      />
+      <Tab.Screen
+        options={{
+          tabBarLabel: null,
+          tabBarIcon: ({tintColor}) => <Icon name="history" size={25} />,
+        }}
+        name="History"
+        component={History}
+      />
       {/* <Tab.Screen name="Profile" component={Profile} /> */}
     </Tab.Navigator>
   );

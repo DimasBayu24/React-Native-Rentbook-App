@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {register, login} from '../Redux/actions/users';
 import {
   View,
   Text,
@@ -8,13 +10,44 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+const mapStateToProps = user => {
+  return {
+    user,
+  };
+};
+
 class Login extends Component {
   state = {
     registerLogin: true,
+    username: '',
+    password: '',
   };
 
-  button = () => {
-    this.props.navigation.navigate('MainPage');
+  registerId = () => {
+    const {username, password} = this.state;
+    const user = {
+      username,
+      password,
+    };
+    this.props.dispatch(register(user));
+    this.state.registerLogin = true;
+  };
+
+  loginId = () => {
+    const {username, password} = this.state;
+    const user = {
+      username,
+      password,
+    };
+    this.props.dispatch(login(user, this.props.navigation));
+  };
+
+  buttonLogin = () => {
+    this.loginId();
+  };
+
+  buttonRegister = () => {
+    this.registerId();
   };
 
   LoginState = () => {};
@@ -24,26 +57,56 @@ class Login extends Component {
       <View style={style.container}>
         <Text style={style.headerLogin}>Here to Get Welcomed!</Text>
         {this.state.registerLogin ? (
-          <TextInput style={style.email} placeholder="email" />
+          <TextInput
+            style={style.email}
+            value={this.state.username}
+            onChangeText={username => this.setState({username})}
+            placeholder="email"
+          />
         ) : (
-          <View>
-            <TextInput style={style.email} placeholder="email" />
-            <TextInput style={style.email} placeholder="username" />
-            <TextInput style={style.email} placeholder="fullname" />
-          </View>
+          <TextInput
+            style={style.email}
+            value={this.state.username}
+            onChangeText={username => this.setState({username})}
+            placeholder="email"
+          />
         )}
-        <TextInput style={style.password} placeholder="password" />
+        {this.state.registerLogin ? (
+          <TextInput
+            value={this.state.password}
+            onChangeText={password => this.setState({password})}
+            secureTextEntry={true}
+            style={style.password}
+            placeholder="password"
+          />
+        ) : (
+          <TextInput
+            value={this.state.password}
+            onChangeText={password => this.setState({password})}
+            secureTextEntry={true}
+            style={style.password}
+            placeholder="password"
+          />
+        )}
         <View style={style.flexSignIn}>
           {this.state.registerLogin ? (
             <Text style={style.signIn}>Sign In</Text>
           ) : (
             <Text style={style.signIn}>Sign Up</Text>
           )}
-          <TouchableOpacity onPress={this.button}>
-            <View style={style.arrow}>
-              <Icon name="arrow-right" size={25} />
-            </View>
-          </TouchableOpacity>
+          {this.state.registerLogin ? (
+            <TouchableOpacity onPress={this.buttonLogin}>
+              <View style={style.arrow}>
+                <Icon name="arrow-right" size={25} />
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={this.buttonRegister}>
+              <View style={style.arrow}>
+                <Icon name="arrow-right" size={25} />
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={style.flexSignUp}>
           <TouchableOpacity
@@ -69,7 +132,7 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(mapStateToProps)(Login);
 
 const style = StyleSheet.create({
   container: {

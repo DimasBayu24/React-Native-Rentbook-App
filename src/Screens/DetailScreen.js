@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import Axios from 'axios';
 import {
   Text,
   ScrollView,
@@ -8,25 +9,49 @@ import {
   ImageBackground,
 } from 'react-native';
 import bookExample from '../Assets/Image/bookExample.jpg';
+import red from '../Assets/Image/red.png';
+import {useRoute} from '@react-navigation/native';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
+const URL_STRING = 'http://192.168.100.168:3009/api/v1/';
+
 const DetailScreen = props => {
+  const route = useRoute();
+  const bookId = route.params.id;
+  const [bookData, setBookData] = useState([]);
+  useEffect(() => {
+    const renderData = async () => {
+      await getBookData();
+    };
+    renderData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getBookData = () => {
+    Axios.get(URL_STRING + bookId)
+      .then(({data}) => {
+        setBookData(data.result[0]);
+      })
+      .catch(err => console.log(err));
+  };
+
   const button = () => {
     props.navigation.navigate('MainPage');
   };
 
   return (
     <View>
-      <ImageBackground style={style.containerImg} source={bookExample}>
+      <ImageBackground style={style.containerImg} source={{uri: bookData.img}}>
         <View>
           <TouchableOpacity onPress={button}>
             <Icon name="arrow-left" size={25} style={style.arrowBack} />
           </TouchableOpacity>
-          <View>
-            <Text>Upin & Ipin</Text>
-            <Image style={style.bookSmall} source={bookExample} />
-          </View>
+        </View>
+        <View style={style.flex}>
+          <Text>{bookData.title}</Text>
+          <Image style={style.bookSmall} source={{uri: bookData.img}} />
         </View>
       </ImageBackground>
       <View>
@@ -34,34 +59,11 @@ const DetailScreen = props => {
           style={style.textContainer}
           vertical={true}
           automaticallyAdjustContentInsets={true}>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed
-            nisl facilisis, mattis elit nec, commodo massa. Lorem ipsum dolor
-            sit amet, consectetur adipiscing elit. Cras placerat nisi et nunc
-            vulputate, a eleifend enim mollis. Duis et fringilla magna, eu
-            lobortis ligula. Aliquam at augue ipsum. Nam purus sem, aliquam quis
-            gravida a, luctus imperdiet mi. Quisque at nunc nunc. Fusce iaculis
-            mi elit, et placerat erat vulputate a. Mauris hendrerit lectus quam,
-            in facilisis neque sollicitudin quis. Vestibulum ante ipsum primis
-            in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus
-            pulvinar aliquet felis eu tincidunt. Duis non iaculis odio. Nunc
-            facilisis nulla sit amet nisl porttitor, ac ultricies quam
-            hendrerit. Morbi mattis mauris id facilisis viverra. Maecenas
-            molestie iaculis viverra. Aenean sem massa, lacinia id bibendum
-            vitae, vulputate a lacus. Aliquam nulla risus, imperdiet id diam
-            vel, efficitur tristique sem. Vestibulum ante ipsum primis in
-            faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat
-            volutpat. Ut nec lorem massa. Proin a interdum leo. Ut consequat
-            semper semper. Sed auctor nulla sit amet risus commodo, sit amet
-            tincidunt lacus mollis. Sed mollis mattis urna et malesuada. Nunc
-            interdum velit at massa sagittis, at vulputate metus interdum. Donec
-            eu cursus ante. Nam non urna sit amet diam luctus vestibulum et
-            volutpat odio. Duis sodales congue semper.
-          </Text>
-          <TouchableOpacity>
-            <Text style={style.rentBook}>RENT</Text>
-          </TouchableOpacity>
+          <Text>{bookData.description}</Text>
         </ScrollView>
+        <TouchableOpacity>
+          <Text style={style.rentBook}>RENT</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -71,6 +73,8 @@ export default DetailScreen;
 
 const style = StyleSheet.create({
   containerImg: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     width: '100%',
     height: 300,
   },
@@ -79,7 +83,8 @@ const style = StyleSheet.create({
     margin: 10,
   },
   textContainer: {
-    height: 360,
+    height: 250,
+    marginTop: 45,
   },
   rentBook: {
     marginVertical: 10,
@@ -91,7 +96,16 @@ const style = StyleSheet.create({
     backgroundColor: '#F4CF5D',
   },
   bookSmall: {
-    width: '22%',
-    height: '30%',
+    width: 110,
+    height: 150,
+    zIndex: 5,
+    position: 'absolute',
+    right: 10,
+    top: -90,
+    borderRadius: 15,
+  },
+  flex: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

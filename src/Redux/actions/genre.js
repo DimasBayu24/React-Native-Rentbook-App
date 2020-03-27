@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const URL_STRING = '/api/v1/book/genre';
+const URL_STRING = 'http://192.168.100.168:3009/api/v1/book/genre';
 
 export const getAllGenre = () => {
   return {

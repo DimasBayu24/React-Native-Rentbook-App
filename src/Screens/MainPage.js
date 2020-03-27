@@ -6,8 +6,8 @@ import HeaderSearch from '../Components/HeaderSearch';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class MainPage extends Component {
-  button = () => {
-    this.props.navigation.navigate('DetailScreen');
+  buttonBook = id => {
+    this.props.navigation.push('DetailScreen', {id: id});
   };
 
   render() {
@@ -15,10 +15,10 @@ class MainPage extends Component {
       <View>
         <HeaderSearch />
         <ScrollViewGenre />
-        <TouchableOpacity onPress={this.button}>
-          <Text style={{fontSize: 20}}>Popular Book</Text>
-        </TouchableOpacity>
-        <PopularBookCard />
+
+        <Text style={{fontSize: 20, marginTop: 20}}>Popular Book</Text>
+
+        <PopularBookCard onPress={this.buttonBook} />
       </View>
     );
   }
