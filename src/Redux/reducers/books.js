@@ -50,27 +50,6 @@ const bookReducers = (state = initialValue, action) => {
         isFulfilled: true,
         bookData: action.payload.data.result,
       };
-    case 'GET_SEARCH_PENDING':
-      return {
-        ...state,
-        isPending: true,
-        isRejected: false,
-        isFulfilled: false,
-      };
-    case 'GET_SEARCH_REJECTED':
-      return {
-        ...state,
-        isPending: false,
-        isRejected: true,
-        ierrMsg: action.payload.data,
-      };
-    case 'GET_SEARCH_FULFILLED':
-      return {
-        ...state,
-        isPending: false,
-        isFulfilled: true,
-        bookData: action.payload.data.result,
-      };
 
     case 'GET_TITLE_PENDING':
       return {
@@ -156,6 +135,27 @@ const bookReducers = (state = initialValue, action) => {
         isPending: false,
         isFulfilled: true,
         bookData: state.bookData,
+      };
+    case 'GET_BOOK_BY_GENRE_PENDING':
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulfilled: false,
+      };
+    case 'GET_BOOK_BY_GENRE_REJECTED':
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        ierrMsg: action.payload.data,
+      };
+    case 'GET_BOOK_BY_GENRE_FULFILLED':
+      return {
+        ...state,
+        isPending: false,
+        isFulfilled: true,
+        bookData: action.payload.data,
       };
 
     default:

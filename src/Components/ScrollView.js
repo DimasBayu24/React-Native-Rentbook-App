@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {getAllGenre} from '../Redux/actions/genre';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const mapStateToProps = genre => {
   return {
@@ -31,11 +32,13 @@ class ScrollViewGenre extends Component {
           showsHorizontalScrollIndicator={false}
           automaticallyAdjustContentInsets={true}>
           {this.state.genre.map((item, index) => (
-            <View key={item.id_genre} style={style.item}>
-              <Text style={{fontSize: 40, marginTop: 10, marginLeft: 20}}>
-                {item.genre_name}
-              </Text>
-            </View>
+            <TouchableOpacity onPress={() => this.props.onPress(item.id_genre)}>
+              <View key={item.id_genre} style={style.item}>
+                <Text style={{fontSize: 40, marginTop: 10, marginLeft: 20}}>
+                  {item.genre_name}
+                </Text>
+              </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>

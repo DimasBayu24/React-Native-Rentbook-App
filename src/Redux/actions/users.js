@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import Axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const URL_STRING = 'http://192.168.100.168:3009/api/v1/user/';
 
@@ -19,11 +20,7 @@ export const login = (data, props) => {
           // eslint-disable-next-line no-alert
           alert('Sukses!');
           try {
-            // localStorage.setItem(
-            //   'token',
-            //   JSON.stringify(res.data.result.token),
-
-            // );
+            AsyncStorage.setItem('token', res.data.result.token);
             props.navigate('MainPage');
           } catch (err) {
             console.log("Something's wrong");

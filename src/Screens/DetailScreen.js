@@ -7,14 +7,12 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
-import bookExample from '../Assets/Image/bookExample.jpg';
-import red from '../Assets/Image/red.png';
 import {useRoute} from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-
+import RentReturnBook from '../Components/RentReturnBook';
 const URL_STRING = 'http://192.168.100.168:3009/api/v1/';
 
 const DetailScreen = props => {
@@ -50,7 +48,7 @@ const DetailScreen = props => {
           </TouchableOpacity>
         </View>
         <View style={style.flex}>
-          <Text>{bookData.title}</Text>
+          <Text style={style.textTitle}>{bookData.title}</Text>
           <Image style={style.bookSmall} source={{uri: bookData.img}} />
         </View>
       </ImageBackground>
@@ -61,9 +59,7 @@ const DetailScreen = props => {
           automaticallyAdjustContentInsets={true}>
           <Text>{bookData.description}</Text>
         </ScrollView>
-        <TouchableOpacity>
-          <Text style={style.rentBook}>RENT</Text>
-        </TouchableOpacity>
+        <RentReturnBook data={bookData} />
       </View>
     </View>
   );
@@ -107,5 +103,12 @@ const style = StyleSheet.create({
   flex: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  textTitle: {
+    fontSize: 15,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    paddingHorizontal: 5,
+    width: 200,
   },
 });

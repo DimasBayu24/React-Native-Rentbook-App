@@ -32,32 +32,44 @@ class PopularBookCard extends Component {
     console.log('book', this.state.book);
   };
 
-  BookItem = ({item}) => {
-    return (
-      // <View style={(styles.item, {backgroundColor: {color}})}>
-      <TouchableOpacity onPress={() => this.props.onPress(item.id)}>
-        <View style={[styles.item]}>
-          <View>
-            <Image
-              style={{width: 145, height: 205, borderRadius: 15}}
-              source={{uri: item.img}}
-            />
-            <Text>{item.title}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+  // BookItem = ({item}) => {
+  //   return (
+  //     // <View style={(styles.item, {backgroundColor: {color}})}>
+  //     <TouchableOpacity onPress={() => this.props.onPress(item.id)}>
+  //       <View style={[styles.item]}>
+  //         <View>
+  //           <Image
+  //             style={{width: 145, height: 205, borderRadius: 15}}
+  //             source={{uri: item.img}}
+  //           />
+  //           <Text>{item.title}</Text>
+  //         </View>
+  //       </View>
+  //     </TouchableOpacity>
+  //   );
+  // };
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <FlatList
-          numColumns={2}
-          vertical={true}
-          data={this.state.book}
-          renderItem={this.BookItem}
-          keyExtractor={item => String(item.id)}
-        />
+        {this.state.book.map(item => (
+          <View
+          // numColumns={2}
+          // vertical={true}
+          // data={this.state.book}
+          // renderItem={this.BookItem}
+          // keyExtractor={item => String(item.id)}
+          >
+            <TouchableOpacity onPress={() => this.props.onPress(item.id)}>
+              <View style={[styles.item]}>
+                <Image
+                  style={{width: 145, height: 205, borderRadius: 15}}
+                  source={{uri: item.img}}
+                />
+                <Text style={{textAlign: 'center'}}>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ))}
       </SafeAreaView>
     );
   }
@@ -71,6 +83,9 @@ const styles = StyleSheet.create({
     marginBottom: 497,
     justifyContent: 'space-between',
     alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
   },
   item: {
     borderRadius: 25,

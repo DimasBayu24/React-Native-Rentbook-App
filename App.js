@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import BottomNavbar from './src/Components/BottomNavbar';
 import History from './src/Screens/History';
 import DetailScreen from './src/Screens/DetailScreen';
+import DetailGenre from './src/Screens/DetailGenre';
 import Login from './src/Screens/Login';
 const Stack = createStackNavigator();
 
@@ -13,7 +14,7 @@ class Navigator extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Login / Register"
+            name="Login"
             component={Login}
             options={{headerShown: false}}
           />
@@ -30,6 +31,11 @@ class Navigator extends Component {
           <Stack.Screen
             name="DetailScreen"
             component={DetailScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="DetailGenre"
+            component={DetailGenre}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

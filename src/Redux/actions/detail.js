@@ -9,17 +9,17 @@ export const getBookById = id => {
   };
 };
 
-export const rentBookRedux = (id, data) => {
+export const rentBookRedux = id => {
   return {
     type: 'PATCH_RENT',
-    payload: Axios.patch(`${URL_STRING}rent/${id}`, data),
+    payload: Axios.patch(`${URL_STRING}rent/${id}`),
   };
 };
 
-export const returnBook = (id, data) => {
+export const returnBook = id => {
   return {
     type: 'PATCH_RETURN',
-    payload: Axios.patch(`${URL_STRING}return/${id}`, data),
+    payload: Axios.patch(`${URL_STRING}return/${id}`),
   };
 };
 

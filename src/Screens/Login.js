@@ -44,10 +44,17 @@ class Login extends Component {
 
   buttonLogin = () => {
     this.loginId();
+    this.setState({
+      username: '',
+      password: '',
+    });
   };
 
   buttonRegister = () => {
     this.registerId();
+    this.setState({
+      password: '',
+    });
   };
 
   LoginState = () => {};

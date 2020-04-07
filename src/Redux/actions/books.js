@@ -9,6 +9,13 @@ export const getAllBook = pageNumber => {
   };
 };
 
+export const getBookByGenre = id_genre => {
+  return {
+    type: 'GET_BOOK_BY_GENRE',
+    payload: Axios.get(`${URL_STRING}/genre/${id_genre}`),
+  };
+};
+
 export const getAvail = () => {
   return {
     type: 'GET_AVAIL',
@@ -19,7 +26,7 @@ export const getAvail = () => {
 export const getSearch = data => {
   return {
     type: 'GET_SEARCH',
-    payload: Axios.get(`${URL_STRING}search/${data}`),
+    payload: Axios.get(`${URL_STRING}/search/title/${data}`),
   };
 };
 
